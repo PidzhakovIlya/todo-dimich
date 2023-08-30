@@ -1,5 +1,6 @@
 import React, {useState, KeyboardEvent, ChangeEvent} from 'react';
 import {FiltersValueType} from "../App";
+import {SuperButton} from "./superButton/SuperButton";
 
 type TodoListPropsType = {
     title: string
@@ -64,6 +65,8 @@ export const TodoList: React.FC<TodoListPropsType> = (props) => {
                     props.changeFilter('Completed')
                 }}>Completed
                 </button>
+                <SuperButton name={'Completed'} callBack={() => {
+                    props.changeFilter('Completed')}}/>
             </div>
         </div>
     );
