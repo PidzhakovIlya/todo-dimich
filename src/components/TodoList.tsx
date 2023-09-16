@@ -5,13 +5,15 @@ import '../App.css';
 
 
 type TodoListPropsType = {
+    id:string
     title: string
     tasks: Array<TaskType>
-    removeTask: (id: string) => void
-    addTask: (title: string) => void
-    changeFilter: (value: FiltersValueType) => void
-    changeTaskStatus: (taskId: string, isDone: boolean) => void
+    removeTask: (id: string, todoListId: string) => void
+    addTask: (title: string, todoListId: string) => void
+    changeFilter: (value: FiltersValueType, todoListId: string) => void
+    changeTaskStatus: (taskId: string, isDone: boolean, todoListId: string) => void
     filtered: FiltersValueType
+    removeTodoList:(todoListId:string)=>void
 }
 type TaskType = {
     id: string
@@ -24,7 +26,7 @@ export const TodoList: React.FC<TodoListPropsType> = (props) => {
 
     const addTaskHandler = () => {
         if (newTitle.trim() !== '') {
-            props.addTask(newTitle.trim())
+            props.addTask(newTitle.trim(), props.id)
             setNewTitle('')
         }else{
             setError("Field is requred")
@@ -43,9 +45,9 @@ export const TodoList: React.FC<TodoListPropsType> = (props) => {
 
     const todoListTasks = props.tasks.map((t) => {
         const inputCheckBoxHandler = (e: ChangeEvent<HTMLInputElement>) => {
-            props.changeTaskStatus(t.id, e.currentTarget.checked)
+            props.changeTaskStatus(t.id, e.currentTarget.checked, props.id)
         }
-        const removeTaskHandler = () => props.removeTask(t.id)
+        const removeTaskHandler = () => props.removeTask(t.id, props.id)
         return (
             <li className={t.isDone? 'is-done' : ''}>
                 <input
@@ -60,9 +62,13 @@ export const TodoList: React.FC<TodoListPropsType> = (props) => {
         )
     })
 
+    const removeTodoList  = () =>{
+        props.removeTodoList(props.id)
+    }
+
     return (
         <div>
-            <h3>{props.title}</h3>
+            <h3>{props.title} <button onClick={removeTodoList}>X</button> </h3>
             <div>
                 <input value={newTitle}
                        onChange={inputOnChangeHandler}
@@ -77,20 +83,17 @@ export const TodoList: React.FC<TodoListPropsType> = (props) => {
             </ul>
             <div>
                 <button className={props.filtered === 'All'? 'active-filter': ''} onClick={() => {
-                    props.changeFilter('All')
+                    props.changeFilter('All', props.id)
                 }}>All
                 </button>
                 <button className={props.filtered === 'Active'? 'active-filter': ''} onClick={() => {
-                    props.changeFilter('Active')
+                    props.changeFilter('Active', props.id)
                 }}>Active
                 </button>
                 <button className={props.filtered === 'Completed'? 'active-filter': ''} onClick={() => {
-                    props.changeFilter('Completed')
+                    props.changeFilter('Completed', props.id)
                 }}>Completed
                 </button>
-                <SuperButton  name={'Completed'} callBack={() => {
-                    props.changeFilter('Completed')
-                }}/>
             </div>
         </div>
     );
