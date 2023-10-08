@@ -6,13 +6,13 @@ import {AddItemForm} from "./components/AddItemForm";
 
 export type FiltersValueType = "All" | "Active" | "Completed";
 
-type TodoListsType = {
+export type TodoListsType = {
     id: string
     title: string
     filter: FiltersValueType
 }
 
-type TaskStateType = {
+export type TaskStateType = {
     [key: string]:TaskType[]
 }
 
@@ -56,17 +56,17 @@ function App() {
     let todoListId2 = v1();
 
 
-    let [todoLists, setTodoList] = useState<Array<TodoListsType>>([
-        {id: todoListId1, title: "What to learn", filter: "All"},
-        {id: todoListId2, title: "What to buy", filter: "Active"}
-    ])
-
     let removeTodoList = (todoListId: string) => {
         let filteredTodoList = todoLists.filter(tl => tl.id !== todoListId)
         setTodoList(filteredTodoList)
         delete tasksObj[todoListId]
         setTasks({...tasksObj})
     }
+
+    let [todoLists, setTodoList] = useState<Array<TodoListsType>>([
+        {id: todoListId1, title: "What to learn", filter: "All"},
+        {id: todoListId2, title: "What to buy", filter: "Active"}
+    ])
 
     const [tasksObj, setTasks] = useState<TaskStateType>({
         [todoListId1]: [
