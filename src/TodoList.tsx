@@ -1,8 +1,8 @@
 import React, {ChangeEvent} from "react";
-import {FiltersValueType} from "../App";
-import "../App.css";
-import {AddItemForm} from "./AddItemForm";
-import {EditableSpan} from "./EditableSpan";
+import {FiltersValueType} from "./App";
+import "./App.css";
+import {AddItemForm} from "./components/AddItemForm";
+import {EditableSpan} from "./components/EditableSpan";
 
 
 type TodoListPropsType = {
