@@ -1,6 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, memo, useState} from "react";
 
-type AddItemFormPropsType = {
+export type AddItemFormPropsType = {
     addItem: (title: string) => void
 }
 export const AddItemForm: React.FC<AddItemFormPropsType> = memo((props) => {
